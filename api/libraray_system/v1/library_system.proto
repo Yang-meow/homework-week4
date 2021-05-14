@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package libraray_system.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "homework-week4/api/libraray_system/v1;v1";
+
+// The library service definition.
+service Library {
+  // Query a Book
+  rpc QueryBook (QueryBookRequest) returns (Book)  {
+        option (google.api.http) = {
+            get: "/library/{name}",
+        };
+    }
+
+  // Borrow a book
+  rpc BorrowBook(BorrowBookRequest) returns (BorrowBookResponse) {
+        option (google.api.http) = {
+          post: "/library/borrow_book",
+        };
+  }
+
+  rpc ReturnBook(ReturnBookRequest) returns (ReturnBookResponse) {
+        option (google.api.http) = {
+          post: "/library/return_book",
+        };
+  }
+}
+
+message Book {
+  string name = 1;
+  string isbn = 2;
+  string author = 3;
+  int64 book_id = 4;
+}
+
+message Reader {
+  string name = 1;
+  int64 member_id = 2;
+}
+
+// The request message containing the book name.
+message QueryBookRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message BorrowBookRequest {
+  string isbn = 1;
+  int64 book_id = 2;
+  Reader borrower = 3;
+  int64 borrow_date = 4;
+}
+
+message BorrowBookResponse {
+  string status = 1;
+  int64 return_date = 2;
+}
+
+message ReturnBookRequest {
+  Reader borrower = 1;
+  string isbn = 2;
+}
+message ReturnBookResponse {
+ string status = 1;
+}
