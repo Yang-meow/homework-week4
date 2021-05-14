@@ -2,12 +2,12 @@ package data
 
 import (
 	"database/sql"
-	"github.com/go-kratos/kratos/v2/log"
-	"github.com/google/wire"
 	"homework-week4/internal/conf"
 	"os"
 
-	_ "github.com/mattn/go-sqlite3" // Import go-sqlite3 library
+	"github.com/go-kratos/kratos/v2/log"
+	"github.com/google/wire"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 // ProviderSet is data providers.
@@ -56,7 +56,7 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 func createTable(db *sql.DB) {
 	createMembersSQL := `CREATE TABLE members (
 		"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,		
-		"name" TEXT,	
+		"name" TEXT	
 	  );` // SQL Statement for Create Table
 
 	statement, err := db.Prepare(createMembersSQL) // Prepare SQL Statement
